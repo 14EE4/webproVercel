@@ -20,12 +20,12 @@
 
   function showTab(tab) {
     // 모든 섹션 숨기기
-    ['school', 'dept', 'dormi', 'meal', 'thread', 'draw'].forEach(id => {
+    ['school', 'dept', 'dormi', 'meal', 'thread', 'draw','shuttlebus'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
     // 모든 버튼 비활성화
-    ['quick-school', 'quick-dept', 'quick-dormi', 'quick-meal', 'quick-thread', 'quick-draw'].forEach(id => {
+    ['quick-school', 'quick-dept', 'quick-dormi', 'quick-meal', 'quick-thread', 'quick-draw','quick-shuttlebus'].forEach(id => {
       const btn = document.getElementById(id);
       if (btn) {
         btn.style.display = '';
