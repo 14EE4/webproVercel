@@ -5,9 +5,17 @@
     const threadsDiv = document.getElementById('threads');
     threadsDiv.innerHTML = '';
     threads.forEach((t, i) => {
-      const div = document.createElement('div');
-      div.innerHTML = `<b>${i + 1}. ${t.title}</b> by ${t.name} <br>${t.content}<hr>`;
-      threadsDiv.appendChild(div);
+      // 전체 개수에서 현재 인덱스를 빼서 번호 부여
+      const number = threads.length - i;
+      const threadEl = document.createElement('div');
+      threadEl.className = 'thread';
+      threadEl.innerHTML = `
+        <div class="thread-meta">${number}. ${t.name} | ${t.created_at}</div>
+        <strong>${t.title}</strong>
+        <p>${t.content}</p>
+        ${t.image ? `<div style="margin-top:1rem;"><img src="${t.image}" style="max-width:100%;border:1px solid #ccc;"></div>` : ''}
+      `;
+      threadsDiv.appendChild(threadEl);
     });
   }
 
