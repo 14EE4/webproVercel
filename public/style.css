@@ -1,3 +1,6 @@
+html {
+  height: 100%;
+}
 body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
@@ -6,6 +9,7 @@ body {
       margin-left: 160px; /* 데스크탑 사이드바 공간 */
       width: 100vw;
       box-sizing: border-box;
+      min-height: 100vh;
     }
     
     header {
@@ -55,6 +59,7 @@ body {
       padding: 0;
       border-radius: 0;
       box-shadow: 0 2px 8px #0001;
+      padding-bottom: 0;
     }
     .iframe-wrap {
       width: 100%;
