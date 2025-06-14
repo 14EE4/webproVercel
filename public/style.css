@@ -52,13 +52,10 @@ body {
     .lms-btn { color: #2196f3; }
     .sugang-btn { color: #43ea7f; }
     section {
+      min-height: 100vh;
       width: 100%;
-      max-width: none;
       margin: 0;
       padding: 0;
-      background: #fff;
-      border-radius: 0;
-      box-shadow: 0 2px 8px #0001;
       box-sizing: border-box;
     }
     .iframe-wrap {
