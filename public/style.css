@@ -160,8 +160,6 @@ body {
     }
     @media (max-width: 900px) {
       body { margin-left: 0; }
-      section { padding: 0.5rem 0; }
-      .iframe-wrap { height: 400px; }
       .sidebar {
         position: static;
         width: 100%;
@@ -177,6 +175,23 @@ body {
         font-size: 0.95rem;
         margin-bottom: 0;
         margin-right: 0.2rem;
+      }
+      section {
+        padding: 0.5rem 0;
+      }
+      .iframe-wrap {
+        height: 400px;
+      }
+      #thread, .thread-outer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      #thread {
+        max-width: 100vw;
+      }
+      #threads {
+        max-width: 100vw;
+        padding: 0.5rem;
       }
     }
     h2 {
