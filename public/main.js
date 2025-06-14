@@ -132,14 +132,16 @@ window.addEventListener('DOMContentLoaded', () => {
     // 마우스 이벤트
     canvas.addEventListener('mousedown', e => {
       drawing = true;
+      const pos = getCanvasPos(canvas, e.clientX, e.clientY);
       ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
+      ctx.moveTo(pos.x, pos.y);
     });
     canvas.addEventListener('mousemove', e => {
       if (drawing) {
+        const pos = getCanvasPos(canvas, e.clientX, e.clientY);
         ctx.strokeStyle = color;
         ctx.lineWidth = lineWidth;
-        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
       }
     });
@@ -147,23 +149,33 @@ window.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('mouseleave', () => drawing = false);
 
     // 터치 이벤트 (모바일)
+    function getCanvasPos(canvas, clientX, clientY) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
     canvas.addEventListener('touchstart', function(e) {
       e.preventDefault();
       drawing = true;
-      const rect = canvas.getBoundingClientRect();
       const touch = e.touches[0];
+      const pos = getCanvasPos(canvas, touch.clientX, touch.clientY);
       ctx.beginPath();
-      ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      ctx.moveTo(pos.x, pos.y);
     }, { passive: false });
 
     canvas.addEventListener('touchmove', function(e) {
       if (!drawing) return;
       e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
       const touch = e.touches[0];
+      const pos = getCanvasPos(canvas, touch.clientX, touch.clientY);
       ctx.strokeStyle = color;
       ctx.lineWidth = lineWidth;
-      ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
     }, { passive: false });
 
