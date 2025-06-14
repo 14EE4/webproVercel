@@ -11,9 +11,9 @@
   <header>
     <h1>학교 통합 공지 & 익명 게시판</h1>
     <div style="margin-top:1rem;">
-      <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" style="margin-right:1rem;">포탈 바로가기</button>
-      <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" style="margin-right:1rem;">LMS 바로가기</button>
-      <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" style="margin-right:1rem;">수강신청 바로가기</button>
+      <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="quick-btn portal-btn">포털 바로가기</button>
+      <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="quick-btn lms-btn">LMS 바로가기</button>
+      <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="quick-btn sugang-btn">수강신청 바로가기</button>
       
       <button id="quick-school" onclick="showTab('school')" style="margin-right:1rem;">학교 공지</button>
       <button id="quick-dept" onclick="showTab('dept')" style="margin-right:1rem;">학과 공지</button>
@@ -21,7 +21,7 @@
       <button id="quick-dormi" onclick="showTab('dormi')" style="margin-right:1rem;">기숙사 공지</button>
       <button id="quick-meal" onclick="showTab('meal')" style="margin-right:1rem;">기숙사 식단표</button>
 
-      <button id="quick-thread" onclick="showTab('thread')" style="margin-right:1rem;">익명 쓰레드</button>
+      <button id="quick-thread" onclick="showTab('thread')" style="margin-right:1rem;">익명 스레드</button>
       <button id="quick-draw" onclick="showTab('draw')">그림판</button>
     </div>
   </header>
@@ -48,7 +48,7 @@
   </section>
 
   <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem;">
-    <h2 style="text-align:center;">익명 쓰레드</h2>
+    <h2 style="text-align:center;">익명 스레드</h2>
     <form class="thread-form" onsubmit="addThread(event)" style="max-width:600px; margin:0 auto; flex-direction:column;">
       <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
         <input type="text" id="thread-name" placeholder="이름 (빈칸이면 Anonymous)">
