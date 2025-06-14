@@ -75,6 +75,39 @@ async function addThread(event) {
 
 // 페이지 진입 시 기본 탭(예: 학교 공지) 열기
 window.addEventListener('DOMContentLoaded', () => {
+  const menuBtn = document.getElementById('menu-toggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('menu-overlay');
+
+  function openMenu() {
+    sidebar.classList.add('open');
+    document.body.classList.add('menu-open');
+    overlay.style.display = 'block';
+  }
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    overlay.style.display = 'none';
+  }
+
+  menuBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // 메뉴 클릭 시 자동 닫기 (모바일에서만)
+  sidebar.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.innerWidth <= 900) closeMenu();
+    });
+  });
+
+  // 기본 탭 열기
   showTab('school'); // 또는 원하는 기본 탭
 
   // 그림판 초기화
@@ -111,22 +144,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     canvas.addEventListener('mouseup', () => drawing = false);
     canvas.addEventListener('mouseleave', () => drawing = false);
-  }
-
-  const menuBtn = document.getElementById('menu-toggle');
-  const sidebar = document.getElementById('sidebar');
-  if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      document.body.classList.toggle('menu-open');
-    });
-    // 메뉴 클릭 시 자동 닫기
-    sidebar.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        document.body.classList.remove('menu-open');
-      });
-    });
   }
 });
 

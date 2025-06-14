@@ -9,24 +9,23 @@
 
 </head>
 <body>
-  <!-- 메뉴 토글 버튼 (모바일에서만 보임) -->
-<button id="menu-toggle">
-  ☰ 메뉴
-</button>
-
-  <div class="sidebar" id="sidebar">
-    <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
-    <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
-    <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
-    <button onclick="showTab('student-meal')" id="quick-student-meal" class="sidebar-btn">학생식당 식단표</button>
-    <button onclick="showTab('dormi')" id="quick-dormi" class="sidebar-btn">기숙사 공지</button>
-    <button onclick="showTab('meal')" id="quick-meal" class="sidebar-btn">기숙사 식단표</button>
-    <button onclick="showTab('thread')" id="quick-thread" class="sidebar-btn">익명 스레드</button>
-    <button onclick="showTab('draw')" id="quick-draw" class="sidebar-btn">그림판</button>
-    <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="sidebar-btn portal-btn">포털 바로가기</button>
-    <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="sidebar-btn lms-btn">LMS 바로가기</button>
-    <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="sidebar-btn sugang-btn">수강신청 바로가기</button>
-  </div>
+  <!-- 메뉴 토글 버튼 (사이드바 위에 위치) -->
+<button id="menu-toggle">☰</button>
+<div class="sidebar" id="sidebar">
+  <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
+  <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
+  <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
+  <button onclick="showTab('student-meal')" id="quick-student-meal" class="sidebar-btn">학생식당 식단표</button>
+  <button onclick="showTab('dormi')" id="quick-dormi" class="sidebar-btn">기숙사 공지</button>
+  <button onclick="showTab('meal')" id="quick-meal" class="sidebar-btn">기숙사 식단표</button>
+  <button onclick="showTab('thread')" id="quick-thread" class="sidebar-btn">익명 스레드</button>
+  <button onclick="showTab('draw')" id="quick-draw" class="sidebar-btn">그림판</button>
+  <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="sidebar-btn portal-btn">포털 바로가기</button>
+  <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="sidebar-btn lms-btn">LMS 바로가기</button>
+  <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="sidebar-btn sugang-btn">수강신청 바로가기</button>
+</div>
+<!-- 오버레이(메뉴 바깥 클릭 감지용) -->
+<div id="menu-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:150;"></div>
 
   <header>
     <h1 style="margin-left:0;">학교 통합 공지 & 익명 게시판</h1>
