@@ -6,24 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <script src="main.js"></script>
+  <style>
+    body {
+      margin-left: 200px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 190px;
+      height: 100vh;
+      background: #e3f2fd;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 2rem 0 2rem 0.5rem;
+      box-shadow: 2px 0 8px rgba(33,150,243,0.08);
+      z-index: 100;
+    }
+    .sidebar-btn {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+      color: #1976d2;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sidebar-btn:hover, .sidebar-btn.active {
+      background: #bbdefb;
+      color: #0d47a1;
+    }
+    .portal-btn { color: #ff9800; }
+    .lms-btn { color: #2196f3; }
+    .sugang-btn { color: #43ea7f; }
+    @media (max-width: 700px) {
+      body { margin-left: 0; }
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        box-shadow: none;
+        padding: 0.5rem 0;
+      }
+      .sidebar-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        margin-right: 0.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>학교 통합 공지 & 익명 게시판</h1>
-    <div style="margin-top:1rem;">
-      <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="quick-btn portal-btn">포털 바로가기</button>
-      <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="quick-btn lms-btn">LMS 바로가기</button>
-      <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="quick-btn sugang-btn">수강신청 바로가기</button>
-      
-      <button id="quick-school" onclick="showTab('school')" style="margin-right:1rem;">학교 공지</button>
-      <button id="quick-dept" onclick="showTab('dept')" style="margin-right:1rem;">학과 공지</button>
-      <button id="quick-shuttlebus" onclick="showTab('shuttlebus')" style="margin-right:1rem;">셔틀버스 시간표</button>
-      <button id="quick-dormi" onclick="showTab('dormi')" style="margin-right:1rem;">기숙사 공지</button>
-      <button id="quick-meal" onclick="showTab('meal')" style="margin-right:1rem;">기숙사 식단표</button>
+  <div class="sidebar">
+    <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
+    <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
+    <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
+    <button onclick="showTab('dormi')" id="quick-dormi" class="sidebar-btn">기숙사 공지</button>
+    <button onclick="showTab('meal')" id="quick-meal" class="sidebar-btn">기숙사 식단표</button>
+    <button onclick="showTab('thread')" id="quick-thread" class="sidebar-btn">익명 스레드</button>
+    <button onclick="showTab('draw')" id="quick-draw" class="sidebar-btn">그림판</button>
+    <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="sidebar-btn portal-btn">포털 바로가기</button>
+    <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="sidebar-btn lms-btn">LMS 바로가기</button>
+    <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="sidebar-btn sugang-btn">수강신청 바로가기</button>
+  </div>
 
-      <button id="quick-thread" onclick="showTab('thread')" style="margin-right:1rem;">익명 스레드</button>
-      <button id="quick-draw" onclick="showTab('draw')">그림판</button>
-    </div>
+  <header>
+    <h1 style="margin-left:0;">학교 통합 공지 & 익명 게시판</h1>
   </header>
 
   <section id="school" style="display:none;">
@@ -35,8 +91,8 @@
     <iframe class="iframe-wrap" src="https://sw.kongju.ac.kr/ZD1180/11654/subview.do" title="소프트웨어학과 공지"></iframe>
   </section>
   <section id="shuttlebus" style="display:none;">
-  <h2 style="text-align:center;">셔틀버스 시간표</h2>
-  <iframe class="iframe-wrap" src="https://kongju.ac.kr/KNU/16880/subview.do" title="셔틀버스 시간표"></iframe>
+    <h2 style="text-align:center;">셔틀버스 시간표</h2>
+    <iframe class="iframe-wrap" src="https://kongju.ac.kr/KNU/16880/subview.do" title="셔틀버스 시간표"></iframe>
   </section>
   <section id="dormi" style="display:none;">
     <h2 style="text-align:center;">기숙사 공지</h2>
@@ -47,7 +103,6 @@
     <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/sub.php?code=041304" title="기숙사 식당 식단표"></iframe>
   </section>
 
-  <!-- 스레드 전체 영역을 감싸는 컨테이너, 배경 하늘색 -->
   <div class="thread-outer" style="background:#e3f2fd; padding:2rem 0;">
     <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem; background:#fff; border-radius:16px; max-width:700px; margin:0 auto; box-shadow:0 2px 12px rgba(33,150,243,0.08);">
       <h2 style="text-align:center;">익명 스레드</h2>
@@ -78,7 +133,5 @@
       <button onclick="clearCanvas()">지우기</button>
     </div>
   </section>
-
-  
 </body>
 </html>

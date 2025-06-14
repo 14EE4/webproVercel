@@ -1,18 +1,114 @@
-body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
-    header { background: #2d3e50; color: #fff; padding: 1rem; text-align: center; }
-    nav { display: flex; justify-content: center; background: #eaeaea; }
-    nav button { margin: 0.5rem; padding: 0.5rem 1rem; border: none; background: #d1d1d1; cursor: pointer; border-radius: 4px; }
-    nav button.active { background: #2d3e50; color: #fff; }
-    section { width: 100vw; max-width: none; margin: 2rem 0; background: #fff; padding: 2rem 0; border-radius: 0; box-shadow: 0 2px 8px #0001; }
-    .notice-flex { display: flex; gap: 2rem; flex-wrap: wrap; width: 100%; }
-    .notice-flex > div { flex: 1; min-width: 0; }
-    .iframe-wrap { width: 100%; height: 600px; border: none; }
-    .thread { border-bottom: 1px solid #eee; padding: 1rem 0; }
-    .thread:last-child { border-bottom: none; }
-    .thread-form { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-    .thread-form input, .thread-form textarea { flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
-    .thread-form button { padding: 0.5rem 1rem; border: none; background: #1976d2; color: #fff; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-    .thread-form button:hover { background: #1565c0; }
+body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+      margin-left: 200px; /* 사이드바 공간 확보 */
+    }
+    header {
+      background: #2d3e50;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 190px;
+      height: 100vh;
+      background: #e3f2fd;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 2rem 0 2rem 0.5rem;
+      box-shadow: 2px 0 8px rgba(33,150,243,0.08);
+      z-index: 100;
+    }
+    .sidebar-btn {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+      color: #1976d2;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sidebar-btn:hover, .sidebar-btn.active {
+      background: #bbdefb;
+      color: #0d47a1;
+    }
+    .portal-btn { color: #ff9800; }
+    .lms-btn { color: #2196f3; }
+    .sugang-btn { color: #43ea7f; }
+    section {
+      width: 100vw;
+      max-width: none;
+      margin: 2rem 0;
+      background: #fff;
+      padding: 2rem 0;
+      border-radius: 0;
+      box-shadow: 0 2px 8px #0001;
+    }
+    .iframe-wrap {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .thread-outer {
+      background: #e3f2fd;
+      padding: 2rem 0;
+    }
+    #thread {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 2px 12px rgba(33,150,243,0.08);
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    #threads {
+      max-width: 600px;
+      margin: 2rem auto 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+      padding: 1.5rem;
+    }
+    .thread {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+    }
+    .thread:last-child {
+      border-bottom: none;
+    }
+    .thread-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .thread-form input, .thread-form textarea {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .thread-form button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .thread-form button:hover {
+      background: #1565c0;
+    }
     /* 상단 버튼 스타일 */
     header button {
       background: #aae0f9;
@@ -63,7 +159,23 @@ body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #
       transform: translateY(-2px) scale(1.04);
     }
     @media (max-width: 900px) {
+      body { margin-left: 0; }
       section { padding: 0.5rem 0; }
       .iframe-wrap { height: 400px; }
-      .notice-flex { flex-direction: column; gap: 1rem; }
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        box-shadow: none;
+        padding: 0.5rem 0;
+      }
+      .sidebar-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        margin-right: 0.2rem;
+      }
     }
