@@ -3,7 +3,7 @@ body {
       margin: 0;
       padding: 0;
       background: #f7f7f7;
-      margin-left: 200px; /* 사이드바 공간 확보 */
+      margin-left: 160px; /* 사이드바 공간 확보 (sidebar width와 맞춤) */
     }
     header {
       background: #2d3e50;
