@@ -73,25 +73,32 @@ async function addThread(event) {
   loadThreads();
 }
 
-// 그림판 간단한 기능
-const canvas = document.getElementById('paint-canvas');
-if (canvas) {
-  const ctx = canvas.getContext('2d');
-  let drawing = false;
-  canvas.addEventListener('mousedown', e => {
-    drawing = true;
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  });
-  canvas.addEventListener('mousemove', e => {
-    if (drawing) {
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
-    }
-  });
-  canvas.addEventListener('mouseup', () => drawing = false);
-  canvas.addEventListener('mouseleave', () => drawing = false);
-}
+// 페이지 진입 시 기본 탭(예: 학교 공지) 열기
+window.addEventListener('DOMContentLoaded', () => {
+  showTab('school'); // 또는 원하는 기본 탭
+
+  // 그림판 초기화
+  const canvas = document.getElementById('paint-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    canvas.addEventListener('mousedown', e => {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+    canvas.addEventListener('mousemove', e => {
+      if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+      }
+    });
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mouseleave', () => drawing = false);
+  }
+});
+
+// clearCanvas 함수는 그대로 사용
 function clearCanvas() {
   const canvas = document.getElementById('paint-canvas');
   if (canvas) {
@@ -99,8 +106,3 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 }
-
-// 페이지 진입 시 기본 탭(예: 학교 공지) 열기
-window.addEventListener('DOMContentLoaded', () => {
-  showTab('thread'); // 또는 loadThreads();
-});
