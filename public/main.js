@@ -113,20 +113,21 @@ window.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('mouseleave', () => drawing = false);
   }
 
-  // 메뉴 토글 기능
   const menuBtn = document.getElementById('menu-toggle');
   const sidebar = document.getElementById('sidebar');
-  menuBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-    document.body.classList.toggle('menu-open');
-  });
-  // 메뉴 클릭 시 자동 닫기 (선택)
-  sidebar.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      document.body.classList.remove('menu-open');
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
     });
-  });
+    // 메뉴 클릭 시 자동 닫기
+    sidebar.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      });
+    });
+  }
 });
 
 function clearCanvas() {
