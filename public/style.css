@@ -3,8 +3,11 @@ body {
       margin: 0;
       padding: 0;
       background: #f7f7f7;
-      margin-left: 160px; /* 사이드바 공간 확보 (sidebar width와 맞춤) */
+      margin-left: 160px; /* 데스크탑 사이드바 공간 */
+      width: 100vw;
+      box-sizing: border-box;
     }
+    
     header {
       background: #2d3e50;
       color: #fff;
@@ -181,7 +184,11 @@ body {
       z-index: 150; /* sidebar의 z-index보다 작아야 함 */
     }
     @media (max-width: 900px) {
-      body { margin-left: 0; }
+      body {
+        margin-left: 0;
+        width: 100vw;
+        overflow-x: hidden;
+      }
       .sidebar {
         position: static;
         width: 40vw;
