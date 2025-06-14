@@ -2,7 +2,7 @@ https://webpro-vercel-three.vercel.app/
 host: vercel.com  
 database:  Neon Postgres
 
-## 프로젝트 발표 정리
+## CampusHub
 
 ### 1. 프로젝트 요약
 - **배포 환경:** Vercel (서버리스 구조)
