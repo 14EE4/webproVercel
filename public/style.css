@@ -184,7 +184,7 @@ body {
       body { margin-left: 0; }
       .sidebar {
         position: static;
-        width: 60vw;
+        width: 40vw;
         height: auto;
         flex-direction: row;
         overflow-x: auto;
