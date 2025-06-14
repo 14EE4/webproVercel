@@ -293,3 +293,19 @@ h1 {
   font-size: 1.5rem;
   line-height: 1.2;
 }
+
+/* 스레드 입력 폼 input, textarea가 부모 너비에 맞게 */
+.thread-form input,
+.thread-form textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 그림판 캔버스가 부모 너비에 맞게 */
+#paint-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
