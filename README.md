@@ -6,14 +6,14 @@ database:  Neon Postgres
 
 ### 1. 프로젝트 요약
 - **배포 환경:** Vercel (서버리스 구조)
-- **DB:** PostgreSQL (Neon 등 클라우드 서비스)
 - **주요 기능:** 스레드(게시글) 작성/조회, 그림판, 여러 공지, 셔틀버스 안내, 주요 사이트 바로가기
 
 ---
 
 ### 2. 주요 기술 스택
 - **프론트엔드:** HTML, CSS, JavaScript (fetch API)
-- **백엔드(API):** Vercel 서버리스 함수(`api/threads.js`), node-postgres(`pg`)
+- **백엔드(API):** Node.js 기반 Vercel 서버리스 함수(`api/threads.js`), node-postgres(`pg`)
+- **DB:** Neon Postgres (클라우드 PostgreSQL)
 - **배포:** Vercel (환경변수로 DB 접속 정보 관리)
 
 ---
