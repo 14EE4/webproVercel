@@ -59,11 +59,7 @@ body {
       background: #fff;
       border-radius: 0;
       box-shadow: 0 2px 8px #0001;
-<<<<<<< HEAD
       box-sizing: border-box;
-=======
-      padding-bottom: 0;
->>>>>>> 966652ee8f9b219c265fb416cad91247575e9fc7
     }
     .iframe-wrap {
       width: 100%;
