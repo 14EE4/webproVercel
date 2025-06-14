@@ -67,3 +67,22 @@ body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #
       .iframe-wrap { height: 400px; }
       .notice-flex { flex-direction: column; gap: 1rem; }
     }
+
+    /* 예시: f:\webproVercel\public\style.css */
+
+    #threads, #paint-section {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #e3f2fd; /* 연한 하늘색 */
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(33,150,243,0.08);
+    }
+
+    /* 필요하다면 섹션별로 더 좁게 */
+    @media (max-width: 700px) {
+      #threads, #paint-section {
+        max-width: 98vw;
+        padding: 1rem;
+      }
+    }
