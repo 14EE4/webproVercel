@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,//환경변수로 데이터베이스 URL을 설정
   ssl: { rejectUnauthorized: false },
 });
 
