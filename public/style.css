@@ -224,10 +224,12 @@ body {
       .sidebar {
         display: none;
         position: fixed;
-        top: 0; left: 0;
+        top: 0;
+        left: 0;
         width: 80vw;
         max-width: 320px;
         height: 100vh;
+        max-height: 100vh;
         background: #e3f2fd;
         flex-direction: column;
         box-shadow: 2px 0 12px #0003;
