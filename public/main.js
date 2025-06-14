@@ -129,6 +129,7 @@ window.addEventListener('DOMContentLoaded', () => {
       widthValue.textContent = lineWidth;
     });
 
+    // 마우스 이벤트
     canvas.addEventListener('mousedown', e => {
       drawing = true;
       ctx.beginPath();
@@ -144,6 +145,34 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     canvas.addEventListener('mouseup', () => drawing = false);
     canvas.addEventListener('mouseleave', () => drawing = false);
+
+    // 터치 이벤트 (모바일)
+    canvas.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      drawing = true;
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      ctx.beginPath();
+      ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      ctx.stroke();
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function(e) {
+      drawing = false;
+    });
+    canvas.addEventListener('touchcancel', function(e) {
+      drawing = false;
+    });
   }
 });
 
