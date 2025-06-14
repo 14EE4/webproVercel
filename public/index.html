@@ -13,6 +13,7 @@
     <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
     <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
     <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
+    <button onclick="showTab('student-meal')" id="quick-student-meal" class="sidebar-btn">학생식당 식단표</button>
     <button onclick="showTab('dormi')" id="quick-dormi" class="sidebar-btn">기숙사 공지</button>
     <button onclick="showTab('meal')" id="quick-meal" class="sidebar-btn">기숙사 식단표</button>
     <button onclick="showTab('thread')" id="quick-thread" class="sidebar-btn">익명 스레드</button>
@@ -38,6 +39,10 @@
     <h2 style="text-align:center;">셔틀버스 시간표</h2>
     <iframe class="iframe-wrap" src="https://kongju.ac.kr/KNU/16880/subview.do" title="셔틀버스 시간표"></iframe>
   </section>
+  <section id="student-meal" style="display:none;">
+    <h2 style="text-align:center;">학생식당 식단표</h2>
+    <iframe class="iframe-wrap" src="https://www.kongju.ac.kr/KNU/16865/subview.do" title="학생식당 식단표"></iframe>
+  </section>
   <section id="dormi" style="display:none;">
     <h2 style="text-align:center;">기숙사 공지</h2>
     <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/board/?id=c-notice" title="기숙사 공지"></iframe>
@@ -46,6 +51,7 @@
     <h2 style="text-align:center;">기숙사 식당 식단표</h2>
     <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/sub.php?code=041304" title="기숙사 식당 식단표"></iframe>
   </section>
+  
 
   <div class="thread-outer" style="background:#e3f2fd; padding:2rem 0;">
     <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem; background:#fff; border-radius:16px; max-width:700px; margin:0 auto; box-shadow:0 2px 12px rgba(33,150,243,0.08);">
