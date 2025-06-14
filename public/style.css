@@ -15,7 +15,7 @@ body {
       position: fixed;
       top: 0;
       left: 0;
-      width: 160px;
+      width: 60vw;
       height: 100vh;
       background: #e3f2fd;
       display: flex;
