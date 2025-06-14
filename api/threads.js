@@ -4,7 +4,6 @@
  * POST 요청 시 새로운 쓰레드를 생성합니다.
  */
 
-
 const { Pool } = require('pg');
 
 const pool = new Pool({
