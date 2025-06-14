@@ -1,20 +1,13 @@
-
-  // Vercel API 연동용 (fetch 경로는 동일)
+// Vercel API 연동용 (fetch 경로는 동일)
   async function loadThreads() {
     const res = await fetch('/api/threads');
     const threads = await res.json();
     const threadsDiv = document.getElementById('threads');
     threadsDiv.innerHTML = '';
-    threads.forEach(t => {
-      const threadEl = document.createElement('div');
-      threadEl.className = 'thread';
-      threadEl.innerHTML = `
-        <div class="thread-meta">${t.name} | ${t.created_at}</div>
-        <strong>${t.title}</strong>
-        <p>${t.content}</p>
-        ${t.image ? `<div style="margin-top:1rem;"><img src="${t.image}" style="max-width:100%;border:1px solid #ccc;"></div>` : ''}
-      `;
-      threadsDiv.appendChild(threadEl);
+    threads.forEach((t, i) => {
+      const div = document.createElement('div');
+      div.innerHTML = `<b>${i + 1}. ${t.title}</b> by ${t.name} <br>${t.content}<hr>`;
+      threadsDiv.appendChild(div);
     });
   }
 
