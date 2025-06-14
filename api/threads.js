@@ -12,6 +12,8 @@ const pool = new Pool({
 });
 
 module.exports = async (req, res) => {
+  //req: HTTP 요청 객체
+  //res: HTTP 응답 객체
   if (req.method === 'GET') {//GET 요청 처리
     /**
      * 데이터베이스에서 쓰레드 목록을 가져와서 클라이언트에 반환합니다.
