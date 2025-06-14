@@ -96,3 +96,7 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
   }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    showTab('thread'); // 또는 loadThreads();
+  });
