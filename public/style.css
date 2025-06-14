@@ -160,6 +160,18 @@ body {
     }
     #menu-toggle {
       display: none;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px #0002;
+      cursor: pointer;
     }
     @media (max-width: 900px) {
       body { margin-left: 0; }
