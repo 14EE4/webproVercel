@@ -68,8 +68,18 @@
     </section>
   </div>
 
+  <!-- 그림판 섹션에 색상/굵기 선택 UI 추가 -->
   <section id="draw" style="display:none;">
     <h2 style="text-align:center;">그림판</h2>
+    <div style="display:flex; justify-content:center; gap:1rem; align-items:center; margin-bottom:1rem;">
+      <label>색상:
+        <input type="color" id="draw-color" value="#1976d2" style="vertical-align:middle;">
+      </label>
+      <label>굵기:
+        <input type="range" id="draw-width" min="1" max="20" value="2" style="vertical-align:middle;">
+        <span id="draw-width-value">2</span>px
+      </label>
+    </div>
     <div style="display:flex; justify-content:center;">
       <canvas id="paint-canvas" width="600" height="400" style="border:1px solid #1976d2; background:#fff;"></canvas>
     </div>

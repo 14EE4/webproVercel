@@ -79,9 +79,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 그림판 초기화
   const canvas = document.getElementById('paint-canvas');
-  if (canvas) {
+  const colorInput = document.getElementById('draw-color');
+  const widthInput = document.getElementById('draw-width');
+  const widthValue = document.getElementById('draw-width-value');
+  if (canvas && colorInput && widthInput && widthValue) {
     const ctx = canvas.getContext('2d');
     let drawing = false;
+    let color = colorInput.value;
+    let lineWidth = parseInt(widthInput.value, 10);
+
+    colorInput.addEventListener('input', () => {
+      color = colorInput.value;
+    });
+    widthInput.addEventListener('input', () => {
+      lineWidth = parseInt(widthInput.value, 10);
+      widthValue.textContent = lineWidth;
+    });
+
     canvas.addEventListener('mousedown', e => {
       drawing = true;
       ctx.beginPath();
@@ -89,6 +103,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     canvas.addEventListener('mousemove', e => {
       if (drawing) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
       }
@@ -98,7 +114,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// clearCanvas 함수는 그대로 사용
 function clearCanvas() {
   const canvas = document.getElementById('paint-canvas');
   if (canvas) {
