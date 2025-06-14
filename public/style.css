@@ -279,8 +279,17 @@ body {
       body.menu-open {
         overflow: hidden;
       }
-    }
-    h2 {
+        .thread-form {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .thread-form > div {
+        flex-direction: column;
+        gap: 0.3rem;
+        display: flex;
+      }
+  }
+h2 {
   font-size: 1.2rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
