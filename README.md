@@ -12,7 +12,7 @@ database:  Neon Postgres
 
 ### 2. 주요 기술 스택
 - **프론트엔드:** HTML, CSS, JavaScript (fetch API)
-- **백엔드(API):** Node.js 기반 Vercel 서버리스 함수(`api/threads.js`), node-postgres(`pg`)
+- **백엔드(API):** Node.js 기반 Vercel 서버리스 함수(`api/threads.js`), node-postgres(`pg`) 라이브러리
 - **DB:** Neon Postgres (클라우드 PostgreSQL)
 - **배포:** Vercel (환경변수로 DB 접속 정보 관리)
 

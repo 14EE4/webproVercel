@@ -47,24 +47,27 @@
     <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/sub.php?code=041304" title="기숙사 식당 식단표"></iframe>
   </section>
 
-  <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem;">
-    <h2 style="text-align:center;">익명 스레드</h2>
-    <form class="thread-form" onsubmit="addThread(event)" style="max-width:600px; margin:0 auto; flex-direction:column;">
-      <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
-        <input type="text" id="thread-name" placeholder="이름 (빈칸이면 Anonymous)">
-        <input type="text" id="thread-title" placeholder="제목 (생략 가능)">
-      </div>
-      <textarea id="thread-content" placeholder="내용" required style="margin-bottom:0.5rem;"></textarea>
-      <div style="display:flex; align-items:center; gap:0.3rem; margin-bottom:0.3rem; justify-content:flex-start;">
-        <button type="submit" style="flex:unset; width:120px;">작성</button>
-        <label for="attach-draw" style="display:flex; align-items:center; font-size:0.95em; cursor:pointer; margin-bottom:0;">
-          <input type="checkbox" id="attach-draw" style="width:auto; margin-right:0.3rem;">
-          그림판 그림 가져오기
-        </label>
-      </div>
-    </form>
-    <div id="threads" style="max-width:600px; margin:2rem auto 0 auto;"></div>
-  </section>
+  <!-- 스레드 전체 영역을 감싸는 컨테이너, 배경 하늘색 -->
+  <div class="thread-outer" style="background:#e3f2fd; padding:2rem 0;">
+    <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem; background:#fff; border-radius:16px; max-width:700px; margin:0 auto; box-shadow:0 2px 12px rgba(33,150,243,0.08);">
+      <h2 style="text-align:center;">익명 스레드</h2>
+      <form class="thread-form" onsubmit="addThread(event)" style="max-width:600px; margin:0 auto; flex-direction:column;">
+        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+          <input type="text" id="thread-name" placeholder="이름 (빈칸이면 Anonymous)">
+          <input type="text" id="thread-title" placeholder="제목 (생략 가능)">
+        </div>
+        <textarea id="thread-content" placeholder="내용" required style="margin-bottom:0.5rem;"></textarea>
+        <div style="display:flex; align-items:center; gap:0.3rem; margin-bottom:0.3rem; justify-content:flex-start;">
+          <button type="submit" style="flex:unset; width:120px;">작성</button>
+          <label for="attach-draw" style="display:flex; align-items:center; font-size:0.95em; cursor:pointer; margin-bottom:0;">
+            <input type="checkbox" id="attach-draw" style="width:auto; margin-right:0.3rem;">
+            그림판 그림 가져오기
+          </label>
+        </div>
+      </form>
+      <div id="threads" style="max-width:600px; margin:2rem auto 0 auto;"></div>
+    </section>
+  </div>
 
   <section id="draw" style="display:none;">
     <h2 style="text-align:center;">그림판</h2>
