@@ -226,15 +226,15 @@ body {
         position: fixed;
         top: 0;
         left: 0;
-        width: 80vw;
-        max-width: 320px;
+        width: 60vw;         /* 모바일에서 화면의 60%만 차지 */
+        max-width: 260px;    /* 최대 너비 제한 */
         height: 100vh;
         max-height: 100vh;
         background: #e3f2fd;
         flex-direction: column;
         box-shadow: 2px 0 12px #0003;
         z-index: 300;
-        padding: 2rem 0 2rem 0.5rem;
+        padding: 1rem 0.5rem;
         overflow-y: auto;
         transition: transform 0.2s;
         transform: translateX(-100%);
