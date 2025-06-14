@@ -9,7 +9,12 @@
 
 </head>
 <body>
-  <div class="sidebar">
+  <!-- 메뉴 토글 버튼 (모바일에서만 보임) -->
+<button id="menu-toggle" style="display:none; position:fixed; top:10px; left:10px; z-index:200; background:#1976d2; color:#fff; border:none; border-radius:6px; padding:0.6rem 1.2rem; font-size:1.1rem; box-shadow:0 2px 8px #0002; cursor:pointer;">
+  ☰ 메뉴
+</button>
+
+  <div class="sidebar" id="sidebar">
     <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
     <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
     <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
