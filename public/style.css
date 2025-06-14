@@ -23,7 +23,7 @@ body {
       align-items: stretch;
       padding: 2rem 0.5rem 2rem 0.5rem;
       box-shadow: 2px 0 8px rgba(33,150,243,0.08);
-      z-index: 100;
+      z-index: 300;
     }
     .sidebar-btn {
       background: none;
@@ -173,6 +173,13 @@ body {
       box-shadow: 0 2px 8px #0002;
       cursor: pointer;
     }
+    #menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 150; /* sidebar의 z-index보다 작아야 함 */
+    }
     @media (max-width: 900px) {
       body { margin-left: 0; }
       .sidebar {
@@ -183,6 +190,8 @@ body {
         overflow-x: auto;
         box-shadow: none;
         padding: 0.5rem 0;
+        overflow-y: auto !important;
+        max-height: 100vh;
       }
       .sidebar-btn {
         flex: 1 1 auto;
