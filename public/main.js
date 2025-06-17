@@ -108,7 +108,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // 기본 탭 열기
-  showTab('school'); // 또는 원하는 기본 탭
+  showTab('thread'); // 처음 화면을 스레드로 설정
 
   // 그림판 초기화
   const canvas = document.getElementById('paint-canvas');
