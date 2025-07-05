@@ -21,7 +21,7 @@ async function loadThreads() {
 
 function showTab(tab) {
   // 모든 주요 섹션 숨기기
-  ['school', 'dept', 'dormi', 'meal', 'draw', 'shuttlebus','student-meal'].forEach(id => {
+  ['school', 'dept', 'dormi', 'meal', 'draw', 'shuttlebus','student-meal', 'minesweeper'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
@@ -30,7 +30,7 @@ function showTab(tab) {
   if (threadOuter) threadOuter.style.display = 'none';
 
   // 모든 사이드바 버튼 비활성화
-  ['quick-school', 'quick-dept', 'quick-dormi', 'quick-meal', 'quick-thread', 'quick-draw', 'quick-shuttlebus',"quick-student-meal"].forEach(id => {
+  ['quick-school', 'quick-dept', 'quick-dormi', 'quick-meal', 'quick-thread', 'quick-draw', 'quick-shuttlebus',"quick-student-meal", 'quick-minesweeper'].forEach(id => {
     const btn = document.getElementById(id);
     if (btn) btn.classList.remove('active');
   });
