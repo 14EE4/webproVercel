@@ -44,7 +44,7 @@ function startGame() {
     mines = [];
     clearInterval(timer);
     time = 0;
-    startTimer();
+    // startTimer(); // 타이머 시작을 첫 클릭으로 이동
 
     for (let r = 0; r < rows; r++) {
         const row = [];
@@ -114,14 +114,15 @@ function countAdjacentMines(row, col) {
 function handleCellClick(cell) {
     if (gameOver || cell.isFlagged) return;
 
+    if (firstClick) {
+        placeMines(cell);
+        startTimer(); // 첫 클릭 시 타이머 시작
+        firstClick = false;
+    }
+
     if (cell.isRevealed) {
         handleChord(cell);
         return;
-    }
-
-    if (firstClick) {
-        placeMines(cell);
-        firstClick = false;
     }
 
     if (revealCell(cell)) {

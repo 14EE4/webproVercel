@@ -29,17 +29,16 @@ module.exports = async (req, res) => {
       
       const { rows } = await pool.query(query, values);
 
-      // score 값을 항상 밀리초 단위로 통일하여 반환
-      const processedRows = rows.map(row => {
-        let processedScore = row.score;
-        // score가 1000보다 작으면 초 단위로 저장된 오래된 기록일 가능성이 높으므로 밀리초로 변환
-        if (processedScore < 1000 && processedScore > 0) { // 0점은 변환하지 않음
-          processedScore = processedScore * 1000;
-        }
-        return { ...row, score: processedScore };
-      });
+      // score 값을 항상 밀리초 단위로 통일하여 반환 (이제 DB에 모두 밀리초이므로 변환 로직 제거)
+      // const processedRows = rows.map(row => {
+      //   let processedScore = row.score;
+      //   if (processedScore < 1000 && processedScore > 0) {
+      //     processedScore = processedScore * 1000;
+      //   }
+      //   return { ...row, score: processedScore };
+      // });
 
-      return res.status(200).json(processedRows);
+      return res.status(200).json(rows);
     } catch (err) {
       console.error('데이터베이스 조회 오류:', err);
       return res.status(500).json({ error: 'Database error while fetching high scores' });
