@@ -110,22 +110,62 @@ function countAdjacentMines(row, col) {
 }
 
 function handleCellClick(cell) {
-    if (gameOver || cell.isRevealed || cell.isFlagged) return;
+    if (gameOver || cell.isFlagged) return;
+
+    if (cell.isRevealed) {
+        handleChord(cell);
+        return;
+    }
 
     if (firstClick) {
         placeMines(cell);
         firstClick = false;
     }
 
-    revealCell(cell);
-
-    if (cell.isMine) {
+    if (revealCell(cell)) {
         endGame(false);
     }
 }
 
+function handleChord(cell) {
+    if (!cell.isRevealed || cell.adjacentMines === 0) return;
+
+    const { rows, cols } = difficulties[currentDifficulty];
+    let flaggedCount = 0;
+    const adjacentCellsToReveal = [];
+
+    for (let r = -1; r <= 1; r++) {
+        for (let c = -1; c <= 1; c++) {
+            if (r === 0 && c === 0) continue;
+            const newRow = cell.row + r;
+            const newCol = cell.col + c;
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+                const adjacentCell = board[newRow][newCol];
+                if (adjacentCell.isFlagged) {
+                    flaggedCount++;
+                } else if (!adjacentCell.isRevealed) {
+                    adjacentCellsToReveal.push(adjacentCell);
+                }
+            }
+        }
+    }
+
+    if (flaggedCount === cell.adjacentMines) {
+        let mineHit = false;
+        adjacentCellsToReveal.forEach(adjCell => {
+            if (revealCell(adjCell)) {
+                mineHit = true;
+            }
+        });
+
+        if (mineHit) {
+            endGame(false);
+        }
+    }
+}
+
 function revealCell(cell) {
-    if (cell.isRevealed || cell.isFlagged) return;
+    if (cell.isRevealed || cell.isFlagged) return false;
 
     const { rows, cols } = difficulties[currentDifficulty];
     cell.isRevealed = true;
@@ -135,7 +175,7 @@ function revealCell(cell) {
     if (cell.isMine) {
         cell.element.classList.add('mine');
         cell.element.innerHTML = '💣';
-        return;
+        return true; // Mine hit
     }
 
     if (cell.adjacentMines > 0) {
@@ -155,6 +195,7 @@ function revealCell(cell) {
     }
 
     checkWin();
+    return false; // No mine hit
 }
 
 function toggleFlag(cell) {
