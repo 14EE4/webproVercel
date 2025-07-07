@@ -20,7 +20,7 @@ let flaggedCells = 0;
 let firstClick = true;
 let gameOver = false;
 let timer;
-let time = 0;
+let time = 0; // time is now in milliseconds
 
 function setDifficulty(difficulty) {
     currentDifficulty = difficulty;
@@ -35,7 +35,7 @@ function startGame() {
 
     boardElement.innerHTML = '';
     minesCountElement.textContent = minesCount;
-    timerElement.textContent = 0;
+    timerElement.textContent = (0).toFixed(2); // Display with 2 decimal places
     revealedCells = 0;
     flaggedCells = 0;
     firstClick = true;
@@ -246,12 +246,12 @@ function endGame(isWin) {
 async function handleWin() {
     try {
         const name = prompt('Enter your name for the leaderboard:');
-        if (!name) return; // 사용자가 취소하면 아무것도 안함
+        if (!name) return; // If user cancels, do nothing
 
         const canvas = await html2canvas(boardElement);
         const imageData = canvas.toDataURL('image/png');
 
-        // 먼저 high_scores 테이블에 기록을 시도합니다.
+        // Send name, difficulty, score (in milliseconds), and image data to high-scores API
         const response = await fetch('/api/high-scores', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -260,10 +260,10 @@ async function handleWin() {
 
         const result = await response.json();
 
-        // API가 신기록이라고 응답했을 때만 스레드에 글을 올립니다.
         if (result.isNewHighScore) {
             alert('New high score! Posting to threads...');
-            await postToThreads(name, currentDifficulty, time, imageData);
+            // Post to threads with formatted time
+            await postToThreads(name, currentDifficulty, (time / 1000).toFixed(2), imageData);
         } else {
             alert('Good game! But not a new high score.');
         }
@@ -277,6 +277,7 @@ async function handleWin() {
 async function postToThreads(name, difficulty, score, image) {
     try {
         const title = `New High Score in Minesweeper!`;
+        // Use the formatted score for the content
         const content = `${name} set a new record of ${score} seconds on ${difficulty} difficulty!`;
 
         const response = await fetch('/api/threads', {
@@ -288,8 +289,8 @@ async function postToThreads(name, difficulty, score, image) {
         if (response.ok) {
             alert('Your new high score has been posted to the threads!');
         } else {
-            const errorResult = await response.json();
-            throw new Error(errorResult.message || 'Failed to post to threads');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to post to threads');
         }
     } catch (error) {
         console.error('Error posting to threads:', error);
@@ -299,9 +300,9 @@ async function postToThreads(name, difficulty, score, image) {
 
 function startTimer() {
     timer = setInterval(() => {
-        time++;
-        timerElement.textContent = time;
-    }, 1000);
+        time += 10; // Increment by 10 milliseconds
+        timerElement.textContent = (time / 1000).toFixed(2); // Display seconds with 2 decimal places
+    }, 10); // Update every 10 milliseconds
 }
 
 difficultyButtons.forEach(button => {
