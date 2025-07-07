@@ -244,44 +244,45 @@ function endGame(isWin) {
 }
 
 async function checkAndPostNewRecord() {
+    // localStorage is no longer the single source of truth for high scores.
+    // We can still use it for a quick check to avoid unnecessary API calls.
     const bestTime = localStorage.getItem(`bestTime_${currentDifficulty}`);
     if (bestTime === null || time < parseInt(bestTime)) {
         localStorage.setItem(`bestTime_${currentDifficulty}`, time);
-        alert(`New record for ${currentDifficulty}: ${time} seconds! Posting to Threads...`);
+        alert(`New record for ${currentDifficulty}: ${time} seconds! Saving to leaderboard...`);
 
         try {
             const canvas = await html2canvas(boardElement);
             const imageData = canvas.toDataURL('image/png');
-            const text = `I just set a new Minesweeper record on ${currentDifficulty} difficulty: ${time} seconds!`;
-            await postToThreads(text, imageData);
+            await postToHighScores(currentDifficulty, time, imageData);
         } catch (error) {
             console.error('Failed to capture or post new record:', error);
-            alert('Failed to post new record.');
+            alert('Failed to save new record.');
         }
     }
 }
 
-async function postToThreads(text, imageData) {
+async function postToHighScores(difficulty, score, imageData) {
     try {
-        const response = await fetch('/api/threads', {
+        const response = await fetch('/api/high-scores', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text, imageData }),
+            body: JSON.stringify({ difficulty, score, imageData }),
         });
 
         if (response.ok) {
             const result = await response.json();
             console.log('Post successful:', result.message);
-            alert('Successfully posted to Threads (check server logs)!');
+            alert('New high score saved to the leaderboard!');
         } else {
-            console.error('Failed to post to Threads:', response.statusText);
-            alert('Failed to post to Threads.');
+            console.error('Failed to post to high scores:', response.statusText);
+            alert('Failed to save high score.');
         }
     } catch (error) {
-        console.error('Error posting to Threads:', error);
-        alert('Error posting to Threads.');
+        console.error('Error posting to high scores:', error);
+        alert('Error saving high score.');
     }
 }
 
