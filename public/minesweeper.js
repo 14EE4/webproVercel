@@ -20,6 +20,7 @@ let flaggedCells = 0;
 let firstClick = true;
 let gameOver = false;
 let timer;
+let time = 0;
 
 function setDifficulty(difficulty) {
     currentDifficulty = difficulty;
@@ -42,6 +43,7 @@ function startGame() {
     board = [];
     mines = [];
     clearInterval(timer);
+    time = 0;
     startTimer();
 
     for (let r = 0; r < rows; r++) {
@@ -229,6 +231,7 @@ function endGame(isWin) {
 
     if (isWin) {
         alert('You win!');
+        checkAndPostNewRecord();
     } else {
         alert('Game over!');
         mines.forEach(mine => {
@@ -240,8 +243,49 @@ function endGame(isWin) {
     }
 }
 
+async function checkAndPostNewRecord() {
+    const bestTime = localStorage.getItem(`bestTime_${currentDifficulty}`);
+    if (bestTime === null || time < parseInt(bestTime)) {
+        localStorage.setItem(`bestTime_${currentDifficulty}`, time);
+        alert(`New record for ${currentDifficulty}: ${time} seconds! Posting to Threads...`);
+
+        try {
+            const canvas = await html2canvas(boardElement);
+            const imageData = canvas.toDataURL('image/png');
+            const text = `I just set a new Minesweeper record on ${currentDifficulty} difficulty: ${time} seconds!`;
+            await postToThreads(text, imageData);
+        } catch (error) {
+            console.error('Failed to capture or post new record:', error);
+            alert('Failed to post new record.');
+        }
+    }
+}
+
+async function postToThreads(text, imageData) {
+    try {
+        const response = await fetch('/api/threads', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text, imageData }),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Post successful:', result.message);
+            alert('Successfully posted to Threads (check server logs)!');
+        } else {
+            console.error('Failed to post to Threads:', response.statusText);
+            alert('Failed to post to Threads.');
+        }
+    } catch (error) {
+        console.error('Error posting to Threads:', error);
+        alert('Error posting to Threads.');
+    }
+}
+
 function startTimer() {
-    let time = 0;
     timer = setInterval(() => {
         time++;
         timerElement.textContent = time;
