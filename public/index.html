@@ -1,106 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>CampusHub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <script src="main.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threads</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 메뉴 토글 버튼 (사이드바 위에 위치) -->
-<button id="menu-toggle">☰</button>
-<div class="sidebar" id="sidebar">
-  <button onclick="showTab('school')" id="quick-school" class="sidebar-btn">학교 공지</button>
-  <button onclick="showTab('dept')" id="quick-dept" class="sidebar-btn">학과 공지</button>
-  <button onclick="showTab('shuttlebus')" id="quick-shuttlebus" class="sidebar-btn">셔틀버스 시간표</button>
-  <button onclick="showTab('student-meal')" id="quick-student-meal" class="sidebar-btn">학생식당 식단표</button>
-  <button onclick="showTab('dormi')" id="quick-dormi" class="sidebar-btn">기숙사 공지</button>
-  <button onclick="showTab('meal')" id="quick-meal" class="sidebar-btn">기숙사 식단표</button>
-  <button onclick="showTab('thread')" id="quick-thread" class="sidebar-btn">익명 스레드</button>
-  <button onclick="showTab('draw')" id="quick-draw" class="sidebar-btn">그림판</button>
-  <button onclick="showTab('minesweeper')" id="quick-minesweeper" class="sidebar-btn">지뢰찾기</button>
-  <button onclick="window.open('https://portal.kongju.ac.kr/','_blank')" class="sidebar-btn portal-btn">포털 바로가기</button>
-  <button onclick="window.open('https://kncu.kongju.ac.kr/','_blank')" class="sidebar-btn lms-btn">LMS 바로가기</button>
-  <button onclick="window.open('https://sugang.kongju.ac.kr/','_blank')" class="sidebar-btn sugang-btn">수강신청 바로가기</button>
-</div>
-<!-- 오버레이(메뉴 바깥 클릭 감지용) -->
-<div id="menu-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:150;"></div>
-
-  <header>
-    <h1 style="margin-left:0;">CampusHub</h1>
-  </header>
-
-  <section id="school" style="display:none;">
-    <h2 style="text-align:center;">학교 공지</h2>
-    <iframe class="iframe-wrap" src="https://www.kongju.ac.kr/KNU/16909/subview.do" title="공주대학교 학생소식"></iframe>
-  </section>
-  <section id="dept" style="display:none;">
-    <h2 style="text-align:center;">학과 공지</h2>
-    <iframe class="iframe-wrap" src="https://sw.kongju.ac.kr/ZD1180/11654/subview.do" title="소프트웨어학과 공지"></iframe>
-  </section>
-  <section id="shuttlebus" style="display:none;">
-    <h2 style="text-align:center;">셔틀버스 시간표</h2>
-    <iframe class="iframe-wrap" src="https://kongju.ac.kr/KNU/16880/subview.do" title="셔틀버스 시간표"></iframe>
-  </section>
-  <section id="student-meal" style="display:none;">
-    <h2 style="text-align:center;">학생식당 식단표</h2>
-    <iframe class="iframe-wrap" src="https://www.kongju.ac.kr/KNU/16865/subview.do" title="학생식당 식단표"></iframe>
-  </section>
-  <section id="dormi" style="display:none;">
-    <h2 style="text-align:center;">기숙사 공지</h2>
-    <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/board/?id=c-notice" title="기숙사 공지"></iframe>
-  </section>
-  <section id="meal" style="display:none;">
-    <h2 style="text-align:center;">기숙사 식당 식단표</h2>
-    <iframe class="iframe-wrap" src="https://dormi.kongju.ac.kr/HOME/sub.php?code=041304" title="기숙사 식당 식단표"></iframe>
-  </section>
-  
-
-  <div class="thread-outer" style="background:#e3f2fd; padding:2rem 0;">
-    <section id="thread" style="display:block; padding-left:2rem; padding-right:2rem; background:#fff; border-radius:16px; max-width:700px; margin:0 auto; box-shadow:0 2px 12px rgba(33,150,243,0.08);">
-      <h2 style="text-align:center;">익명 스레드</h2>
-      <form class="thread-form" onsubmit="addThread(event)" style="max-width:600px; margin:0 auto; flex-direction:column;">
-        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
-          <input type="text" id="thread-name" placeholder="이름 (빈칸이면 Anonymous)">
-          <input type="text" id="thread-title" placeholder="제목 (생략 가능)">
-        </div>
-        <textarea id="thread-content" placeholder="내용" required style="margin-bottom:0.5rem;"></textarea>
-        <div style="display:flex; align-items:center; gap:0.3rem; margin-bottom:0.3rem; justify-content:flex-start;">
-          <button type="submit" style="flex:unset; width:120px;">작성</button>
-          <label for="attach-draw" style="display:flex; align-items:center; font-size:0.95em; cursor:pointer; margin-bottom:0;">
-            <input type="checkbox" id="attach-draw" style="width:auto; margin-right:0.3rem;">
-            그림판 그림 가져오기
-          </label>
-        </div>
-      </form>
-      <div id="threads" style="max-width:600px; margin:2rem auto 0 auto;"></div>
-    </section>
-  </div>
-
-  <!-- 그림판 섹션에 색상/굵기 선택 UI 추가 -->
-  <section id="draw" style="display:none;">
-    <h2 style="text-align:center;">그림판</h2>
-    <div style="display:flex; justify-content:center; gap:1rem; align-items:center; margin-bottom:1rem;">
-      <label>색상:
-        <input type="color" id="draw-color" value="#1976d2" style="vertical-align:middle;">
-      </label>
-      <label>굵기:
-        <input type="range" id="draw-width" min="1" max="20" value="2" style="vertical-align:middle;">
-        <span id="draw-width-value">2</span>px
-      </label>
+    <div class="container">
+        <header>
+            <h1>Threads</h1>
+        </header>
+        <main>
+            <section class="new-thread-form">
+                <h2>Create a new thread</h2>
+                <form id="thread-form">
+                    <input type="text" id="name" placeholder="Your name" required>
+                    <input type="text" id="title" placeholder="Thread title" required>
+                    <textarea id="content" placeholder="What's on your mind?" required></textarea>
+                    <input type="text" id="image" placeholder="Image URL (optional)">
+                    <button type="submit">Post Thread</button>
+                </form>
+            </section>
+            <section class="thread-list">
+                <h2>Latest Threads</h2>
+                <div id="threads-container">
+                    <!-- Threads will be loaded here dynamically -->
+                </div>
+            </section>
+        </main>
     </div>
-    <div style="display:flex; justify-content:center;">
-      <canvas id="paint-canvas" width="600" height="400" style="border:1px solid #1976d2; background:#fff;"></canvas>
-    </div>
-    <div style="text-align:center; margin-top:1rem;">
-      <button onclick="clearCanvas()">지우기</button>
-    </div>
-  </section>
-  <section id="minesweeper" style="display:none;">
-    <h2 style="text-align:center;">지뢰찾기</h2>
-    <iframe class="iframe-wrap" src="minesweeper.html" title="지뢰찾기 게임" style="width:100%; height:600px; border:none;"></iframe>
-  </section>
+    <script src="main.js"></script>
 </body>
 </html>

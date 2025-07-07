@@ -1,320 +1,102 @@
-html {
-  height: 100%;
-}
 body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f7f7f7;
-      margin-left: 160px; /* 데스크탑 사이드바 공간 */
-      width: 100vw;
-      box-sizing: border-box;
-      min-height: 100vh;
-    }
-    
-    header {
-      background: #2d3e50;
-      color: #fff;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 160px;
-      height: 100vh;
-      background: #e3f2fd;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      padding: 2rem 0.5rem 2rem 0.5rem;
-      box-shadow: 2px 0 8px rgba(33,150,243,0.08);
-      z-index: 300;
-    }
-    .sidebar-btn {
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 0.8rem 1rem;
-      margin-bottom: 0.2rem;
-      font-size: 1rem;
-      color: #1976d2;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .sidebar-btn:hover, .sidebar-btn.active {
-      background: #bbdefb;
-      color: #0d47a1;
-    }
-    .portal-btn { color: #ff9800; }
-    .lms-btn { color: #2196f3; }
-    .sugang-btn { color: #43ea7f; }
-    section {
-      min-height: 100vh;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    .iframe-wrap {
-      width: 100%;
-      min-height: 100vh;
-      height: 100vh;
-      border: none;
-      display: block;
-    }
-    .thread-outer {
-      background: #e3f2fd;
-      padding: 2rem 0;
-    }
-    #thread {
-      background: #fff;
-      border-radius: 16px;
-      max-width: 700px;
-      margin: 0 auto;
-      box-shadow: 0 2px 12px rgba(33,150,243,0.08);
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-    #threads {
-      max-width: 600px;
-      margin: 2rem auto 0 auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(33,150,243,0.08);
-      padding: 1.5rem;
-    }
-    .thread {
-      border-bottom: 1px solid #eee;
-      padding: 1rem 0;
-    }
-    .thread:last-child {
-      border-bottom: none;
-    }
-    .thread-form {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .thread-form input, .thread-form textarea {
-      flex: 1;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .thread-form button {
-      padding: 0.5rem 1rem;
-      border: none;
-      background: #1976d2;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .thread-form button:hover {
-      background: #1565c0;
-    }
-    /* 상단 버튼 스타일 */
-    header button {
-      background: #aae0f9;
-      color: #115aa3;
-      border: 2px solid #1976d2;
-      font-weight: bold;
-      transition: background 0.2s, color 0.2s;
-    }
-    header button:hover, header button.active {
-      background: #1976d2;
-      color: #fff;
-      border-color: #1976d2;
-    }
-    .quick-btn {
-      border: none;
-      border-radius: 22px;
-      padding: 0.7rem 1.6rem;
-      font-weight: bold;
-      font-size: 1rem;
-      margin-right: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      letter-spacing: 1px;
-    }
-    .portal-btn {
-      background: linear-gradient(90deg, #ff9800 0%, #ff5722 100%);
-      color: #fff;
-    }
-    .portal-btn:hover {
-      background: linear-gradient(90deg, #ff5722 0%, #ff9800 100%);
-      transform: translateY(-2px) scale(1.04);
-    }
-    .lms-btn {
-      background: linear-gradient(90deg, #2196f3 0%, #00bcd4 100%);
-      color: #fff;
-    }
-    .lms-btn:hover {
-      background: linear-gradient(90deg, #00bcd4 0%, #2196f3 100%);
-      transform: translateY(-2px) scale(1.04);
-    }
-    .sugang-btn {
-      background: linear-gradient(90deg, #43ea7f 0%, #1cc88a 100%);
-      color: #fff;
-    }
-    .sugang-btn:hover {
-      background: linear-gradient(90deg, #1cc88a 0%, #43ea7f 100%);
-      transform: translateY(-2px) scale(1.04);
-    }
-    #menu-toggle {
-      display: none;
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 200;
-      background: #1976d2;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 0.3rem 0.7rem;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 8px #0002;
-      cursor: pointer;
-    }
-    #menu-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 150; /* sidebar의 z-index보다 작아야 함 */
-    }
-    /* 스레드, 그림판 영역 공통 */
-#thread, #draw {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
 }
 
-/* 모바일에서 더 좁게 */
-@media (max-width: 900px) {
-  #thread, #draw {
-    max-width: 100%;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-  }
-  #threads {
-    max-width: 100%;
-    padding: 0.5rem;
-  }
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-@media (max-width: 900px) {
-      body {
-        margin-left: 0;
-        width: 100vw;
-        overflow-x: hidden;
-      }
-      .sidebar {
-        position: static;
-        width: 40vw;
-        height: auto;
-        flex-direction: row;
-        overflow-x: auto;
-        box-shadow: none;
-        padding: 0.5rem 0;
-        overflow-y: auto !important;
-        max-height: 100vh;
-      }
-      .sidebar-btn {
-        padding: 0.5rem 0.7rem;
-        margin-bottom: 0.05rem;
-        font-size: 0.95rem;
-        text-align: center;
-        margin-right: 0.2rem;
-      }
-      section {
-        padding: 0.5rem 0;
-      }
-      .iframe-wrap {
-        height: 400px;
-      }
-      #thread, .thread-outer {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-      #thread {
-        max-width: 100vw;
-      }
-      #threads {
-        max-width: 100vw;
-        padding: 0.5rem;
-      }
-      /* 모바일에서만 메뉴 버튼 보이게 */
-      #menu-toggle {
-        display: block;
-      }
-      .sidebar {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 60vw;         /* 모바일에서 화면의 60%만 차지 */
-        max-width: 260px;    /* 최대 너비 제한 */
-        height: 100vh;
-        max-height: 100vh;
-        background: #e3f2fd;
-        flex-direction: column;
-        box-shadow: 2px 0 12px #0003;
-        z-index: 300;
-        padding: 1rem 0.5rem;
-        overflow-y: auto;
-        transition: transform 0.2s;
-        transform: translateX(-100%);
-      }
-      .sidebar.open {
-        display: flex;
-        transform: translateX(0);
-      }
-      body.menu-open {
-        overflow: hidden;
-      }
-        .thread-form {
-        flex-direction: column;
-        gap: 0.3rem;
-      }
-      .thread-form > div {
-        flex-direction: column;
-        gap: 0.3rem;
-        display: flex;
-      }
-  }
-h2 {
-  font-size: 1.2rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-  padding: 0.5rem;
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
 }
+
 h1 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  line-height: 1.2;
+    color: #2c3e50;
 }
 
-/* 스레드 입력 폼 input, textarea가 부모 너비에 맞게 */
-.thread-form input,
-.thread-form textarea {
-  max-width: 100%;
-  box-sizing: border-box;
+.new-thread-form,
+.thread-list {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
 }
 
-/* 그림판 캔버스가 부모 너비에 맞게 */
-#paint-canvas {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  box-sizing: border-box;
+.new-thread-form h2,
+.thread-list h2 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#thread-form input[type="text"],
+#thread-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+#thread-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#thread-form button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#thread-form button:hover {
+    background-color: #218838;
+}
+
+.thread-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.thread-item:last-child {
+    border-bottom: none;
+}
+
+.thread-item h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+.thread-item .meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.thread-item .content {
+    margin-bottom: 10px;
+}
+
+.thread-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
 }
