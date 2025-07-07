@@ -56,6 +56,11 @@ async function addThread(event) {
   // 이미지 URL 입력 필드에서 값을 가져옵니다.
   let image = document.getElementById('image').value.trim();
 
+  // 이미지 URL에 프로토콜이 없으면 https://를 붙여줍니다.
+  if (image && !image.startsWith('http://') && !image.startsWith('https://')) {
+    image = 'https://' + image;
+  }
+
   // 그림판 그림 가져오기 체크 시 draw 캔버스의 이미지를 가져와 우선 적용
   if (document.getElementById('attach-draw').checked) {
     const drawCanvas = document.getElementById('paint-canvas');
