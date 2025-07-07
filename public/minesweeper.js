@@ -248,9 +248,11 @@ async function handleWin() {
         // 1. 현재 난이도의 최고 기록을 가져옵니다.
         const response = await fetch(`/api/high-scores?difficulty=${currentDifficulty}`);
         const existingHighScores = await response.json();
+        // bestScore는 이제 항상 밀리초 단위로 옵니다.
         const currentBestScore = existingHighScores.length > 0 ? existingHighScores[0].score : null;
 
         let isNewHighScore = false;
+        // time (현재 기록)도 밀리초 단위이므로 직접 비교합니다.
         if (currentBestScore === null || time < currentBestScore) {
             isNewHighScore = true;
         }
@@ -275,7 +277,8 @@ async function handleWin() {
             await postToThreads(name, currentDifficulty, (time / 1000).toFixed(2), imageData);
 
         } else {
-            alert(`Good game! Your time was ${(time / 1000).toFixed(2)} seconds. The current best is ${currentBestScore / 1000} seconds.`);
+            // currentBestScore는 이미 밀리초 단위이므로 1000으로 나눕니다.
+            alert(`Good game! Your time was ${(time / 1000).toFixed(2)} seconds. The current best is ${(currentBestScore / 1000).toFixed(2)} seconds.`);
         }
 
     } catch (error) {

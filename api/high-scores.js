@@ -8,7 +8,6 @@ const pool = new Pool({
 });
 
 module.exports = async (req, res) => {
-  // GET 요청: 난이도별 최고 기록을 불러옵니다.
   if (req.method === 'GET') {
     try {
       const { difficulty } = req.query; // 쿼리 파라미터에서 difficulty를 가져옵니다.
@@ -29,13 +28,23 @@ module.exports = async (req, res) => {
       }
       
       const { rows } = await pool.query(query, values);
-      return res.status(200).json(rows);
+
+      // score 값을 항상 밀리초 단위로 통일하여 반환
+      const processedRows = rows.map(row => {
+        let processedScore = row.score;
+        // score가 1000보다 작으면 초 단위로 저장된 오래된 기록일 가능성이 높으므로 밀리초로 변환
+        if (processedScore < 1000 && processedScore > 0) { // 0점은 변환하지 않음
+          processedScore = processedScore * 1000;
+        }
+        return { ...row, score: processedScore };
+      });
+
+      return res.status(200).json(processedRows);
     } catch (err) {
       console.error('데이터베이스 조회 오류:', err);
       return res.status(500).json({ error: 'Database error while fetching high scores' });
     }
   }
-  // POST 요청: 새로운 기록을 저장합니다. (신기록 여부 판단은 프론트엔드에서)
   else if (req.method === 'POST') {
     try {
       let body = '';
