@@ -1,55 +1,53 @@
-import { Pool } from 'pg';
+/**
+ * 이 모듈은 쓰레드 목록을 가져오거나 새로운 쓰레드를 생성하는 API 엔드포인트입니다.
+ * GET 요청 시 데이터베이스에서 쓰레드 목록을 가져오고,
+ * POST 요청 시 새로운 쓰레드를 생성합니다.
+ */
+
+const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+  connectionString: process.env.DATABASE_URL,//환경변수로 데이터베이스 URL을 설정
+  ssl: { rejectUnauthorized: false },
 });
 
-export default async function handler(req, res) {
-    // GET 요청: 모든 스레드를 최신순으로 불러옵니다.
-    if (req.method === 'GET') {
-        try {
-            // created_at이 TEXT 타입이므로, ISO 8601 형식(YYYY-MM-DDTHH:MM:SS)으로 저장되어야
-            // 문자열 정렬이 시간순 정렬과 동일하게 동작합니다.
-            const query = 'SELECT * FROM threads ORDER BY created_at DESC';
-            const { rows } = await pool.query(query);
-            return res.status(200).json(rows);
-        } catch (error) {
-            console.error('데이터베이스 조회 오류:', error);
-            return res.status(500).json({ message: '데이터베이스에서 스레드를 불러오는데 실패했습니다.', error: error.message });
-        }
+module.exports = async (req, res) => {
+  //req: HTTP 요청 객체
+  //res: HTTP 응답 객체
+  if (req.method === 'GET') {//GET 요청 처리
+    /**
+     * 데이터베이스에서 쓰레드 목록을 가져와서 클라이언트에 반환합니다.
+     * 데이터베이스 연결은 환경변수로 설정된 DATABASE_URL을 사용합니다.
+     */
+    try {
+      const { rows } = await pool.query('SELECT * FROM threads ORDER BY id DESC');
+      res.status(200).json(rows);
+    } catch (err) {
+      res.status(500).json({ error: 'Database error' });
     }
-
-    // POST 요청: 새로운 스레드를 생성합니다.
-    if (req.method === 'POST') {
-        const { name, title, content, image } = req.body;
-
-        if (!name || !title || !content) {
-            return res.status(400).json({ message: '요청 본문에 name, title, 또는 content가 없습니다.' });
-        }
-
-        // created_at 값을 서버에서 생성합니다. ISO 8601 형식으로 저장합니다.
-        const createdAt = new Date().toISOString();
-
-        try {
-            // 테이블 스키마에 맞는 INSERT 쿼리
-            const query = 'INSERT INTO threads (name, title, content, image, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-            // image는 선택사항일 수 있으므로, 없으면 null로 처리합니다.
-            const values = [name, title, content, image || null, createdAt];
-            const result = await pool.query(query, values);
-
-            console.log('threads 테이블에 새로운 스레드가 삽입되었습니다:', result.rows[0]);
-            return res.status(201).json({ message: '스레드가 성공적으로 생성되었습니다.', data: result.rows[0] });
-
-        } catch (error) {
-            console.error('데이터베이스 삽입 오류:', error);
-            return res.status(500).json({ message: '데이터베이스에 스레드를 저장하는데 실패했습니다.', error: error.message });
-        }
+  } else if (req.method === 'POST') {//POST 요청 처리
+    /**
+     * 클라이언트로부터 받은 쓰레드 데이터를 데이터베이스에 저장합니다.
+     * 요청 본문에서 name, title, content, image를 추출하고,
+     * 현재 시간을 created_at으로 설정하여 데이터베이스에 삽입합니다.
+     */
+    try {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', async () => {
+        const data = JSON.parse(body);
+        const { name, title, content, image } = data;
+        const created_at = new Date().toISOString();
+        await pool.query(
+          'INSERT INTO threads (name, title, content, image, created_at) VALUES ($1, $2, $3, $4, $5)',
+          [name, title, content, image, created_at]
+        );
+        res.status(201).json({ ok: true });
+      });
+    } catch (err) {
+      res.status(500).json({ error: 'Database error' });
     }
-
-    // 그 외 다른 HTTP 메소드는 허용하지 않습니다.
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).json({ message: `메소드 ${req.method}는 허용되지 않습니다.` });
-}
+  } else {
+    res.status(405).end();
+  }
+};
