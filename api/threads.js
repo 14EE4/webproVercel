@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
       const { rows } = await pool.query('SELECT * FROM threads ORDER BY id DESC');
       res.status(200).json(rows);
     } catch (err) {
+      console.error('[GET /api/threads] Database error:', err);
       res.status(500).json({ error: 'Database error' });
     }
   } else if (req.method === 'POST') {//POST 요청 처리
@@ -35,16 +36,28 @@ module.exports = async (req, res) => {
       let body = '';
       req.on('data', chunk => { body += chunk; });
       req.on('end', async () => {
+        console.log('[POST /api/threads] Received raw body:', body);
         const data = JSON.parse(body);
+        console.log('[POST /api/threads] Parsed data:', data);
+
         const { name, title, content, image } = data;
         const created_at = new Date().toISOString();
+
+        // Check for required fields before querying DB
+        if (!name || !title || !content) {
+          console.error('[POST /api/threads] Missing required fields:', { name, title, content });
+          return res.status(400).json({ error: 'Missing name, title, or content' });
+        }
+
         await pool.query(
           'INSERT INTO threads (name, title, content, image, created_at) VALUES ($1, $2, $3, $4, $5)',
           [name, title, content, image, created_at]
         );
+        console.log('[POST /api/threads] Thread inserted successfully.');
         res.status(201).json({ ok: true });
       });
     } catch (err) {
+      console.error('[POST /api/threads] Error processing request or database insertion:', err);
       res.status(500).json({ error: 'Database error' });
     }
   } else {
