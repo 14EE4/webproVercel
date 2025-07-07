@@ -1,12 +1,11 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // threads.js와 동일한 환경 변수 사용
+  connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 
 module.exports = async (req, res) => {
-  // GET 요청: 난이도별 최고 기록을 불러옵니다.
   if (req.method === 'GET') {
     try {
       const query = `
@@ -20,24 +19,35 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: 'Database error while fetching high scores' });
     }
   }
-  // POST 요청: 새로운 최고 기록을 저장합니다.
   else if (req.method === 'POST') {
     try {
       let body = '';
       req.on('data', chunk => { body += chunk; });
       req.on('end', async () => {
-        const data = JSON.parse(body);
-        const { difficulty, score, imageData } = data;
+        const { difficulty, score, imageData } = JSON.parse(body);
 
         if (!difficulty || score === undefined || !imageData) {
           return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const query = 'INSERT INTO high_scores (difficulty, score, image_data) VALUES ($1, $2, $3) RETURNING *';
-        const values = [difficulty, score, imageData];
-        await pool.query(query, values);
-        
-        res.status(201).json({ ok: true });
+        // 1. 현재 난이도의 최고 기록(가장 낮은 점수)을 조회합니다.
+        const bestScoreQuery = 'SELECT MIN(score) as best_score FROM high_scores WHERE difficulty = $1';
+        const { rows } = await pool.query(bestScoreQuery, [difficulty]);
+        const bestScore = rows[0].best_score;
+
+        // 2. 새로운 점수가 더 좋거나, 기존 기록이 없을 경우에만 신기록으로 처리합니다.
+        if (bestScore === null || score < bestScore) {
+          // 3. high_scores 테이블에 새로운 기록을 저장합니다.
+          const insertQuery = 'INSERT INTO high_scores (difficulty, score, image_data) VALUES ($1, $2, $3) RETURNING *';
+          const insertValues = [difficulty, score, imageData];
+          await pool.query(insertQuery, insertValues);
+          
+          // 4. 프론트엔드에 신기록임을 알립니다.
+          return res.status(201).json({ isNewHighScore: true, message: 'New high score saved!' });
+        } else {
+          // 신기록이 아닐 경우, 아무것도 저장하지 않고 응답합니다.
+          return res.status(200).json({ isNewHighScore: false, message: 'Not a new high score.' });
+        }
       });
     } catch (err) {
       res.status(500).json({ error: 'Database error while saving high score' });

@@ -231,7 +231,7 @@ function endGame(isWin) {
 
     if (isWin) {
         alert('You win!');
-        checkAndPostNewRecord();
+        checkHighScore();
     } else {
         alert('Game over!');
         mines.forEach(mine => {
@@ -243,46 +243,52 @@ function endGame(isWin) {
     }
 }
 
-async function checkAndPostNewRecord() {
-    // localStorage is no longer the single source of truth for high scores.
-    // We can still use it for a quick check to avoid unnecessary API calls.
-    const bestTime = localStorage.getItem(`bestTime_${currentDifficulty}`);
-    if (bestTime === null || time < parseInt(bestTime)) {
-        localStorage.setItem(`bestTime_${currentDifficulty}`, time);
-        alert(`New record for ${currentDifficulty}: ${time} seconds! Saving to leaderboard...`);
+async function checkHighScore() {
+    try {
+        const canvas = await html2canvas(boardElement);
+        const imageData = canvas.toDataURL('image/png');
 
-        try {
-            const canvas = await html2canvas(boardElement);
-            const imageData = canvas.toDataURL('image/png');
-            await postToHighScores(currentDifficulty, time, imageData);
-        } catch (error) {
-            console.error('Failed to capture or post new record:', error);
-            alert('Failed to save new record.');
+        const response = await fetch('/api/high-scores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ difficulty: currentDifficulty, score: time, imageData }),
+        });
+
+        const result = await response.json();
+
+        if (result.isNewHighScore) {
+            const name = prompt('New high score! Enter your name for the leaderboard:');
+            if (name) {
+                await postToThreads(name, currentDifficulty, time, imageData);
+            }
         }
+
+    } catch (error) {
+        console.error('Error checking or posting high score:', error);
+        alert('An error occurred while checking the high score.');
     }
 }
 
-async function postToHighScores(difficulty, score, imageData) {
+async function postToThreads(name, difficulty, score, image) {
     try {
-        const response = await fetch('/api/high-scores', {
+        const title = `New High Score in Minesweeper!`;
+        const content = `${name} set a new record of ${score} seconds on ${difficulty} difficulty!`;
+
+        const response = await fetch('/api/threads', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ difficulty, score, imageData }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, title, content, image }),
         });
 
         if (response.ok) {
-            const result = await response.json();
-            console.log('Post successful:', result.message);
-            alert('New high score saved to the leaderboard!');
+            alert('Your new high score has been posted to the threads!');
         } else {
-            console.error('Failed to post to high scores:', response.statusText);
-            alert('Failed to save high score.');
+            const errorResult = await response.json();
+            throw new Error(errorResult.message || 'Failed to post to threads');
         }
     } catch (error) {
-        console.error('Error posting to high scores:', error);
-        alert('Error saving high score.');
+        console.error('Error posting to threads:', error);
+        alert(`Failed to post to threads: ${error.message}`);
     }
 }
 
