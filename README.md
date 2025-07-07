@@ -1,45 +1,86 @@
-https://knucampushub.vercel.app
-host: vercel.com  
-database:  Neon Postgres
+# CampusHub
 
-## CampusHub
+> **Note**: 이 프로젝트는 Google의 Gemini CLI의 도움을 받아 개발되었습니다.
 
-### 1. 프로젝트 요약
-- **배포 환경:** Vercel (서버리스 구조)
-- **주요 기능:** 스레드(게시글) 작성/조회, 그림판(색상·굵기 선택), 여러 공지, 셔틀버스 안내, 학생식당 식단표, 주요 사이트 바로가기
+`CampusHub`는 다양한 학교 관련 정보와 유틸리티를 한곳에 모아 제공하는 웹 애플리케이션입니다. 익명 스레드 게시판, 지뢰찾기 게임, 학교/학과 공지사항, 셔틀버스 시간표, 식단표 등 다양한 기능을 포함하고 있습니다.
 
----
+## 주요 기능
 
-### 2. 주요 기술 스택
-- **프론트엔드:** HTML, CSS, JavaScript (fetch API)
-- **백엔드(API):** Node.js 기반 Vercel 서버리스 함수(`api/threads.js`), node-postgres(`pg`) 라이브러리
-- **DB:** Neon Postgres (클라우드 PostgreSQL)
-- **배포:** Vercel (환경변수로 DB 접속 정보 관리)
+-   **사이드바 내비게이션**: 직관적인 사이드바 메뉴를 통해 다양한 섹션으로 쉽게 이동할 수 있습니다.
+-   **익명 스레드 게시판**: 사용자들이 익명으로 글을 작성하고 소통할 수 있는 게시판입니다.
+    -   이름, 제목, 내용을 포함한 글 작성 기능
+    -   그림판에서 그린 이미지를 첨부하여 게시 가능
+    -   PostgreSQL (Neon DB)을 통한 데이터 저장 및 불러오기
+-   **지뢰찾기 게임**: 웹 기반으로 구현된 클래식 지뢰찾기 게임입니다.
+    -   **난이도 조절**: 쉬움(10x10, 지뢰 10개), 보통(16x16, 지뢰 40개), 어려움(24x24, 지뢰 99개)
+    -   **화음(Chording) 기능**: 열린 숫자 칸 클릭 시 주변 칸 자동 열기
+    -   **모바일 진동 피드백**: 깃발 설치 시 진동 효과
+    -   **신기록 시스템**: 난이도별 최고 기록을 추적하고 저장 (PostgreSQL - Neon DB)
+    -   **스레드 연동**: 신기록 달성 시, 게임 맵 스크린샷과 함께 익명 스레드 게시판에 자동으로 축하 글 게시
+-   **학교/학과 정보**: 학교 공지, 학과 공지, 셔틀버스 시간표, 학생식당/기숙사 식단표 등 외부 웹페이지를 `iframe`으로 통합하여 제공합니다.
+-   **그림판**: 간단한 그림을 그릴 수 있는 웹 기반 그림판 기능.
 
----
+## 기술 스택
 
-### 3. 폴더 및 파일 구조
-webproVercel/
-├── api/
-│   └── threads.js      # 서버리스 함수(API)
-├── public/
-│   ├── index.html      # 메인 페이지 HTML
-│   ├── main.js         # 프론트엔드 JS
-│   └── style.css       # CSS
-├── package.json        # 프로젝트 설정 및 의존성
+-   **프론트엔드**: HTML, CSS, JavaScript
+-   **백엔드**: Node.js (Vercel Serverless Functions)
+-   **데이터베이스**: PostgreSQL (Neon DB)
+-   **라이브러리**: `html2canvas` (게임 맵 스크린샷), `pg` (PostgreSQL 클라이언트)
 
----
+## 설치 및 실행 방법
 
-### 4. 주요 구현 내용
-- **api/threads.js:** 서버리스 함수로 스레드(게시글) 조회/작성 API 구현
-- **public/main.js:** 스레드 목록 표시, 글 작성, 그림판(색상·굵기 선택) 등 프론트엔드 기능
-- **public/style.css:** 반응형 디자인, 사이드바 메뉴, 버튼/섹션 스타일, 모바일 환경 대응 디자인
-- **환경변수:** Vercel 대시보드에서 `DATABASE_URL`(Postgres 접속 정보) 등록
-- **기타:** 학교/학과 공지, 학생식당 식단표, 셔틀버스 안내, 기숙사 공지/식단표(iframe), 포털/LMS/수강신청 바로가기 버튼, 사이드바 메뉴바 적용, 모바일 환경에서 메뉴를 버튼으로 열고 닫을 때는 빈부분 터치, 좌우가 화면을 넘지않게 대응, 모바일에서도 터치 이벤트로 그림판 사용 가능
+이 프로젝트는 Vercel 플랫폼에 최적화되어 있습니다.
 
----
+1.  **프로젝트 클론**: 이 저장소를 로컬에 클론합니다.
+    ```bash
+    git clone <repository_url>
+    cd vercelwebtest/webproVercel
+    ```
 
-### 5. 배포 및 테스트
-- GitHub에 코드 push → Vercel에서 자동 배포
-- 배포된 Vercel URL에서 기능 정상 동작 확인
-- 문제 발생 시 Vercel의 배포 로그 및 환경변수
+2.  **의존성 설치**: 프로젝트 루트 디렉토리(`vercelwebtest/webproVercel`)에서 다음 명령어를 실행하여 필요한 Node.js 패키지를 설치합니다.
+    ```bash
+    npm install
+    ```
+
+3.  **데이터베이스 설정**: 
+    -   Neon.tech에서 PostgreSQL 데이터베이스를 생성합니다.
+    -   데이터베이스 연결 URL을 복사합니다.
+    -   프로젝트 루트 디렉토리(`vercelwebtest/webproVercel`)에 `.env.local` 파일을 생성하고 다음 내용을 추가합니다. (Vercel 배포 시에는 Vercel 대시보드에서 환경 변수를 설정합니다.)
+        ```
+        DATABASE_URL="YOUR_NEON_POSTGRES_CONNECTION_STRING"
+        ```
+    -   `high_scores` 테이블을 생성합니다. (SQL 쿼리는 아래 참조)
+        ```sql
+        CREATE TABLE high_scores (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            difficulty TEXT NOT NULL,
+            score INT NOT NULL,
+            image_data TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        );
+        ```
+    -   `threads` 테이블이 없다면 생성합니다. (SQL 쿼리는 아래 참조)
+        ```sql
+        CREATE TABLE threads (
+          id SERIAL PRIMARY KEY,
+          name TEXT,
+          title TEXT,
+          content TEXT,
+          image TEXT,
+          created_at TEXT
+        );
+        ```
+
+4.  **개발 서버 실행**: 프로젝트 루트 디렉토리(`vercelwebtest/webproVercel`)에서 다음 명령어를 실행하여 로컬 개발 서버를 시작합니다.
+    ```bash
+    npm run dev
+    ```
+
+5.  **접속**: 웹 브라우저에서 `http://localhost:3000` (또는 터미널에 표시되는 주소)로 접속합니다.
+
+## 사용 방법
+
+-   **내비게이션**: 화면 왼쪽에 있는 사이드바 메뉴를 클릭하여 각 섹션(학교 공지, 익명 스레드, 지뢰찾기 등)으로 이동할 수 있습니다.
+-   **익명 스레드**: '익명 스레드' 탭에서 이름, 제목, 내용을 입력하여 새 글을 작성할 수 있습니다. 그림판에서 그린 그림을 첨부할 수도 있습니다.
+-   **지뢰찾기**: '지뢰찾기' 탭에서 게임을 플레이합니다. 신기록 달성 시 이름과 함께 기록이 저장되고 스레드 게시판에 자동으로 공유됩니다.
