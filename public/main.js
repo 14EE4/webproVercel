@@ -52,14 +52,18 @@ async function addThread(event) {
   const name = document.getElementById('thread-name').value.trim() || 'Anonymous';
   const title = document.getElementById('thread-title').value.trim() || " ";
   const content = document.getElementById('thread-content').value.trim();
-  let image = null;
-  // 그림판 그림 가져오기 체크 시 draw 캔버스의 이미지를 가져옴
+  
+  // 이미지 URL 입력 필드에서 값을 가져옵니다.
+  let image = document.getElementById('image').value.trim();
+
+  // 그림판 그림 가져오기 체크 시 draw 캔버스의 이미지를 가져와 우선 적용
   if (document.getElementById('attach-draw').checked) {
     const drawCanvas = document.getElementById('paint-canvas');
     if (drawCanvas) {
       image = drawCanvas.toDataURL('image/png');
     }
   }
+
   if (!content) return;
   await fetch('/api/threads', {
     method: 'POST',
@@ -69,6 +73,7 @@ async function addThread(event) {
   document.getElementById('thread-name').value = '';
   document.getElementById('thread-title').value = '';
   document.getElementById('thread-content').value = '';
+  document.getElementById('image').value = ''; // 이미지 URL 필드 초기화
   document.getElementById('attach-draw').checked = false;
   loadThreads();
 }
@@ -108,7 +113,6 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // 기본 탭 열기
-  //showTab('thread'); // 처음 화면을 스레드로 설정
   showTab('thread'); // 처음 화면을 스레드로 설정
 
 
