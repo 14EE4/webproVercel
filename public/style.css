@@ -94,8 +94,10 @@ body {
       border-bottom: none;
     }
     .thread img {
-      max-width: 100%;
-      height: auto;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: auto !important;
+      display: block !important;
       border-radius: 4px;
       margin-top: 10px;
     }
@@ -324,3 +326,4 @@ h1 {
   margin: 0 auto;
   box-sizing: border-box;
 }
+

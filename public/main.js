@@ -13,7 +13,7 @@ async function loadThreads() {
       <div class="thread-meta">${number}. ${t.name} | ${t.created_at}</div>
       <strong>${t.title}</strong>
       <p>${t.content}</p>
-      ${t.image ? `<div style="margin-top:1rem;"><img src="${t.image}" style="max-width:100%;border:1px solid #ccc;"></div>` : ''}
+      ${t.image ? `<div style="margin-top:1rem;"><img src="${t.image}"></div>` : ''}
     `;
     threadsDiv.appendChild(threadEl);
   });
