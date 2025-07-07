@@ -1,3 +1,8 @@
+:root {
+    --rows: 10;
+    --cols: 10;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -10,10 +15,21 @@ h1 {
     color: #333;
 }
 
+#difficulty-selector {
+    margin-bottom: 10px;
+}
+
+#difficulty-selector button {
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
 .game-info {
     display: flex;
     justify-content: space-between;
-    width: 320px;
+    width: calc(var(--cols) * 32px);
     margin-bottom: 10px;
     font-size: 1.2em;
 }
@@ -26,8 +42,8 @@ h1 {
 
 #minesweeper-board {
     display: grid;
-    grid-template-columns: repeat(10, 32px);
-    grid-template-rows: repeat(10, 32px);
+    grid-template-columns: repeat(var(--cols), 32px);
+    grid-template-rows: repeat(var(--rows), 32px);
     border: 2px solid #7b7b7b;
 }
 
