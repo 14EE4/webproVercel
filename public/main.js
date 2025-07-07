@@ -64,18 +64,39 @@ async function addThread(event) {
     }
   }
 
-  if (!content) return;
-  await fetch('/api/threads', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, title, content, image })
-  });
-  document.getElementById('thread-name').value = '';
-  document.getElementById('thread-title').value = '';
-  document.getElementById('thread-content').value = '';
-  document.getElementById('image').value = ''; // 이미지 URL 필드 초기화
-  document.getElementById('attach-draw').checked = false;
-  loadThreads();
+  if (!content) {
+    console.warn('Content is empty. Not posting thread.');
+    return;
+  }
+
+  console.log('Attempting to post thread with data:', { name, title, content, image });
+
+  try {
+    const response = await fetch('/api/threads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, title, content, image })
+    });
+
+    console.log('Received response from /api/threads:', response.status, response.statusText);
+
+    if (response.ok) {
+      alert('Thread posted successfully!');
+      document.getElementById('thread-name').value = '';
+      document.getElementById('thread-title').value = '';
+      document.getElementById('thread-content').value = '';
+      document.getElementById('image').value = ''; // 이미지 URL 필드 초기화
+      document.getElementById('attach-draw').checked = false;
+      loadThreads(); // Reload threads
+    } else {
+      const errorData = await response.json();
+      console.error('Error response data:', errorData);
+      alert(`Failed to post thread: ${errorData.error || response.statusText}`);
+    }
+  } catch (error) {
+    console.error('Network or fetch error:', error);
+    alert(`Failed to post thread due to network error: ${error.message}`);
+  }
 }
 
 // 페이지 진입 시 기본 탭(예: 학교 공지) 열기
