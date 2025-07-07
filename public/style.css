@@ -93,6 +93,12 @@ body {
     .thread:last-child {
       border-bottom: none;
     }
+    .thread img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
     .thread-form {
       display: flex;
       gap: 0.5rem;
@@ -318,4 +324,3 @@ h1 {
   margin: 0 auto;
   box-sizing: border-box;
 }
-
