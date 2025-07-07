@@ -231,7 +231,7 @@ function endGame(isWin) {
 
     if (isWin) {
         alert('You win!');
-        checkHighScore();
+        handleWin();
     } else {
         alert('Game over!');
         mines.forEach(mine => {
@@ -243,29 +243,34 @@ function endGame(isWin) {
     }
 }
 
-async function checkHighScore() {
+async function handleWin() {
     try {
+        const name = prompt('Enter your name for the leaderboard:');
+        if (!name) return; // 사용자가 취소하면 아무것도 안함
+
         const canvas = await html2canvas(boardElement);
         const imageData = canvas.toDataURL('image/png');
 
+        // 먼저 high_scores 테이블에 기록을 시도합니다.
         const response = await fetch('/api/high-scores', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ difficulty: currentDifficulty, score: time, imageData }),
+            body: JSON.stringify({ name, difficulty: currentDifficulty, score: time, imageData }),
         });
 
         const result = await response.json();
 
+        // API가 신기록이라고 응답했을 때만 스레드에 글을 올립니다.
         if (result.isNewHighScore) {
-            const name = prompt('New high score! Enter your name for the leaderboard:');
-            if (name) {
-                await postToThreads(name, currentDifficulty, time, imageData);
-            }
+            alert('New high score! Posting to threads...');
+            await postToThreads(name, currentDifficulty, time, imageData);
+        } else {
+            alert('Good game! But not a new high score.');
         }
 
     } catch (error) {
-        console.error('Error checking or posting high score:', error);
-        alert('An error occurred while checking the high score.');
+        console.error('Error handling win:', error);
+        alert('An error occurred while processing your score.');
     }
 }
 
