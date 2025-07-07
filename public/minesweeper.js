@@ -206,6 +206,9 @@ function toggleFlag(cell) {
     if (cell.isFlagged) {
         cell.element.classList.add('flagged');
         flaggedCells++;
+        if (navigator.vibrate) {
+            navigator.vibrate(100); // Vibrate for 100ms
+        }
     } else {
         cell.element.classList.remove('flagged');
         flaggedCells--;
